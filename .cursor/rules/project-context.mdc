@@ -1,0 +1,75 @@
+---
+description: Context about the MyID Migration project
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# MyID Migration Project Context
+
+## Project Overview
+
+This project tracks two independent migration efforts:
+
+1. **ACME Migration (SOLO → ACME)** - Migrating applications from SOLO authentication to ACME (MyID)
+2. **Sentry Migration (1.0 → 2.0)** - Upgrading applications from Sentry 1.0 to Sentry 2.0
+
+## Key Deadlines
+
+- **2/27/26** - Primary deadline for at-risk items
+- **Future** - Items with no immediate deadline (e.g., GSS applications)
+
+## Status Values
+
+### ACME Migration Status
+- `Completed` - Migration to ACME is done
+- `Not Started` - Migration work has not begun
+- `In Progress` - Migration work is underway
+- `Blocked` - Cannot proceed due to dependency/issue
+- `Not Needed` - App is disabled, doesn't exist, or doesn't require migration
+
+### Sentry Migration Status
+- `Not Started` - Currently on Sentry 1.0, needs upgrade
+- `Completed` - Already on Sentry 2.0
+- `Not Needed` - Already on Sentry 2.0 or not applicable
+- `N/A` - App uses SOLO (not Sentry-based)
+
+## Systems
+
+- Genie
+- VPP
+- GSS
+- FGS
+- TM
+- BzBee
+- Workforce
+- Zazu
+
+## Environments
+
+- INT (Integration)
+- STG (Staging)
+- PRD (Production)
+- QAT (Quality Assurance Testing)
+- LOCAL (Localhost)
+
+## Key Team Members
+
+- Ricardo - Tech Lead (VPP, TM, Genie)
+- Jin Chung - Owner (GSS, FGS, BzBee)
+- Chris (Dan) - Tech Lead (GSS)
+- Mike Wang - Tech Lead (BzBee)
+- Jimmy - Tech Lead (Genie/ArgoCD)
+- Mark Arana - Tech Lead (Workforce)
+- Drew Kutilek - Owner (VPP items)
+
+## File Structure
+
+```
+MyID_Migration/
+├── .cursor/rules/          # AI assistant rules
+├── archive/                # Versioned backups (v1, v2, etc.)
+├── data/input/             # Source CSV data
+├── docs/                   # Documentation
+├── reports/                # Generated HTML dashboards
+└── scripts/                # Python scripts for automation
+```

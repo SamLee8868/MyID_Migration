@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyID Migration Status Report - February 6, 2026</title>
+    <style>
+        /* Print-optimized styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        @page {
+            size: letter;
+            margin: 0.5in;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #333;
+            background: white;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #0088cc;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .header h1 {
+            font-size: 24pt;
+            color: #0088cc;
+            margin-bottom: 5px;
+        }
+        .header .subtitle {
+            font-size: 12pt;
+            color: #666;
+        }
+        .header .date {
+            font-size: 10pt;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        /* Summary Stats */
+        .summary-section {
+            margin-bottom: 25px;
+        }
+        .summary-section h2 {
+            font-size: 14pt;
+            color: #0077b6;
+            border-bottom: 2px solid #0077b6;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-box {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+        .stat-box .number {
+            font-size: 28pt;
+            font-weight: bold;
+        }
+        .stat-box .label {
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+        }
+        .stat-box.green { border-color: #00d26a; }
+        .stat-box.green .number { color: #00a854; }
+        .stat-box.blue { border-color: #64b5f6; }
+        .stat-box.blue .number { color: #1976d2; }
+        .stat-box.red { border-color: #ff6b6b; }
+        .stat-box.red .number { color: #d32f2f; }
+        .stat-box.yellow { border-color: #ffd54f; }
+        .stat-box.yellow .number { color: #f57c00; }
+        .stat-box.gray { border-color: #9e9e9e; }
+        .stat-box.gray .number { color: #616161; }
+        .stat-box.cyan { border-color: #00bcd4; }
+        .stat-box.cyan .number { color: #0097a7; }
+        
+        /* Tables */
+        .table-section {
+            margin-bottom: 25px;
+            page-break-inside: avoid;
+        }
+        .table-section h3 {
+            font-size: 12pt;
+            color: #333;
+            background: #f5f5f5;
+            padding: 8px 12px;
+            margin-bottom: 0;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 6px 6px 0 0;
+        }
+        .table-section h3 .badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 9pt;
+            margin-left: 10px;
+        }
+        .table-section h3 .badge.warning {
+            background: #ffc107;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
+        }
+        th, td {
+            padding: 8px 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #f8f8f8;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 8pt;
+            letter-spacing: 0.5px;
+        }
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 8pt;
+            font-weight: 500;
+        }
+        .status-badge.not-started { background: #e3f2fd; color: #1565c0; border: 1px solid #64b5f6; }
+        .status-badge.blocked { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+        .status-badge.completed { background: #e8f5e9; color: #2e7d32; border: 1px solid #81c784; }
+        .status-badge.not-needed { background: #fff8e1; color: #f57c00; border: 1px solid #ffcc80; }
+        
+        /* Key Info */
+        .key-info {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+        .key-info h3 {
+            color: #e65100;
+            margin-bottom: 10px;
+            font-size: 12pt;
+        }
+        .key-info ul {
+            margin-left: 20px;
+        }
+        .key-info li {
+            margin-bottom: 5px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 9pt;
+            color: #888;
+            margin-top: 30px;
+        }
+        
+        /* Print-specific */
+        @media print {
+            body { padding: 0; }
+            .no-print { display: none; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MyID Migration Status Report</h1>
+        <div class="subtitle">SOLO → ACME & Sentry 1.0 → Sentry 2.0 Migration Tracking</div>
+        <div class="date">Report Generated: February 6, 2026</div>
+    </div>
+
+    <div class="key-info">
+        <h3>⚠️ Key Deadline Alert: February 27, 2026</h3>
+        <ul>
+            <li><strong>9 applications</strong> at risk of missing the 2/27/26 deadline</li>
+            <li>All at-risk items are assigned to <strong>Ricardo</strong></li>
+            <li>Systems affected: <strong>VPP</strong> (6 apps) and <strong>TM</strong> (3 apps)</li>
+            <li>3 items currently <strong>blocked</strong> waiting on Jin, Mike, Bonnie, Koi</li>
+        </ul>
+    </div>
+
+    <div class="summary-section">
+        <h2>ACME Migration Summary (SOLO → ACME)</h2>
+        <div class="stats-grid">
+            <div class="stat-box green">
+                <div class="number">13</div>
+                <div class="label">Completed</div>
+            </div>
+            <div class="stat-box blue">
+                <div class="number">18</div>
+                <div class="label">Not Started</div>
+            </div>
+            <div class="stat-box red">
+                <div class="number">3</div>
+                <div class="label">Blocked</div>
+            </div>
+            <div class="stat-box yellow">
+                <div class="number">19</div>
+                <div class="label">Not Needed</div>
+            </div>
+        </div>
+        <p style="text-align: center; color: #0097a7; font-weight: bold;">Progress: 38% Complete (13 of 34 requiring migration)</p>
+    </div>
+
+    <div class="summary-section">
+        <h2>Sentry Migration Summary (1.0 → 2.0)</h2>
+        <div class="stats-grid">
+            <div class="stat-box green">
+                <div class="number">21</div>
+                <div class="label">Complete / Not Needed</div>
+            </div>
+            <div class="stat-box blue">
+                <div class="number">3</div>
+                <div class="label">Not Started</div>
+            </div>
+            <div class="stat-box gray">
+                <div class="number">29</div>
+                <div class="label">N/A (SOLO Apps)</div>
+            </div>
+            <div class="stat-box cyan">
+                <div class="number">9</div>
+                <div class="label">At Risk for 2/27/26</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-section">
+        <h3>At Risk for 2/27/26 Deadline <span class="badge">9 Items</span></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Platform/App</th>
+                    <th>Env</th>
+                    <th>System</th>
+                    <th>Tech Lead</th>
+                    <th>ACME Status</th>
+                    <th>Sentry Status</th>
+                    <th>JIRA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>mp-vpp-int</td>
+                    <td>INT</td>
+                    <td>VPP</td>
+                    <td>Ricardo</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>Not Started</td>
+                    <td>PLAT-1879, PLAT-2137, PLAT-2139</td>
+                </tr>
+                <tr>
+                    <td>mp-vpp-prd</td>
+                    <td>PRD</td>
+                    <td>VPP</td>
+                    <td>Ricardo</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>Not Started</td>
+                    <td>PLAT-1879, PLAT-2137, PLAT-2139</td>
+                </tr>
+                <tr>
+                    <td>mp-vpp-stg</td>
+                    <td>STG</td>
+                    <td>VPP</td>
+                    <td>Ricardo</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>Not Started</td>
+                    <td>PLAT-1879, PLAT-2137, PLAT-2139</td>
+                </tr>
+                <tr>
+                    <td>sentry-vpp-int</td>
+                    <td>INT</td>
+                    <td>VPP</td>
+                    <td>Ricardo</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>N/A</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>sentry-vpp-stg</td>
+                    <td>STG</td>
+                    <td>VPP</td>
+                    <td>Ricardo</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>N/A</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>sentry-vpp-prd</td>
+                    <td>PRD</td>
+                    <td>VPP</td>
+                    <td>Ricardo</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>N/A</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>tm2-int</td>
+                    <td>INT</td>
+                    <td>TM</td>
+                    <td>Ricardo</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>Not Needed</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>tm2-prd</td>
+                    <td>PRD</td>
+                    <td>TM</td>
+                    <td>Ricardo</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>Not Needed</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>tm2-stg</td>
+                    <td>STG</td>
+                    <td>TM</td>
+                    <td>Ricardo</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>Not Needed</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-section">
+        <h3>Currently Blocked <span class="badge">3 Items</span></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Platform/App</th>
+                    <th>Env</th>
+                    <th>System</th>
+                    <th>Owner</th>
+                    <th>Blocker</th>
+                    <th>JIRA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>fgs-saml-stg</td>
+                    <td>STG</td>
+                    <td>FGS</td>
+                    <td>Jin Chung</td>
+                    <td style="color: #c62828;">Waiting on Jin, Mike, Bonnie, Koi</td>
+                    <td>APPS-2420</td>
+                </tr>
+                <tr>
+                    <td>fgs-prod-saml</td>
+                    <td>PRD</td>
+                    <td>FGS</td>
+                    <td>Jin Chung</td>
+                    <td style="color: #c62828;">Waiting on Jin, Mike, Bonnie, Koi</td>
+                    <td>APPS-2420</td>
+                </tr>
+                <tr>
+                    <td>fgs-saml-int</td>
+                    <td>INT</td>
+                    <td>FGS</td>
+                    <td>Jin Chung</td>
+                    <td style="color: #c62828;">Waiting on Jin, Mike, Bonnie, Koi</td>
+                    <td>APPS-2420</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="table-section">
+        <h3>Future Migrations (No Deadline Yet) <span class="badge warning">9 Items</span></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Platform/App</th>
+                    <th>Env</th>
+                    <th>System</th>
+                    <th>Tech Lead</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>gss-c3pi-int</td>
+                    <td>INT</td>
+                    <td>GSS</td>
+                    <td>Chris (Dan)</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>Verifying with Dan</td>
+                </tr>
+                <tr>
+                    <td>gss-c3pi-prd</td>
+                    <td>PRD</td>
+                    <td>GSS</td>
+                    <td>Chris (Dan)</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>Verifying with Dan</td>
+                </tr>
+                <tr>
+                    <td>gss-c3pi-qat</td>
+                    <td>QAT</td>
+                    <td>GSS</td>
+                    <td>Chris (Dan)</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>Verifying with Dan</td>
+                </tr>
+                <tr>
+                    <td>gss-c3pi-stg</td>
+                    <td>STG</td>
+                    <td>GSS</td>
+                    <td>Chris (Dan)</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td>Verifying with Dan</td>
+                </tr>
+                <tr>
+                    <td>gss_localhost</td>
+                    <td>LOCAL</td>
+                    <td>GSS</td>
+                    <td>Chris (Dan)</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>gss_qat</td>
+                    <td>QAT</td>
+                    <td>GSS</td>
+                    <td>Chris (Dan)</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>gss_int</td>
+                    <td>INT</td>
+                    <td>GSS</td>
+                    <td>Chris (Dan)</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>gss-prd</td>
+                    <td>PRD</td>
+                    <td>GSS</td>
+                    <td>Chris (Dan)</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>gss-stg</td>
+                    <td>STG</td>
+                    <td>GSS</td>
+                    <td>Chris (Dan)</td>
+                    <td><span class="status-badge not-started">Not Started</span></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-section">
+        <h3>ACME Migration Completed <span class="badge" style="background: #00a854;">13 Items</span></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Platform/App</th>
+                    <th>Env</th>
+                    <th>System</th>
+                    <th>Tech Lead</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>https://genie.int.us-west-2.videononprod.wds.io</td><td>INT</td><td>Genie</td><td>Ricardo</td><td></td></tr>
+                <tr><td>https://genie.us-west-2.video.wds.io</td><td>PRD</td><td>Genie</td><td>Ricardo</td><td></td></tr>
+                <tr><td>https://genie.stg.us-west-2.videononprod.wds.io</td><td>STG</td><td>Genie</td><td>Ricardo</td><td></td></tr>
+                <tr><td>studio-workforce</td><td>PRD</td><td>Workforce</td><td>Mark Arana</td><td>Direct integration with ACME</td></tr>
+                <tr><td>argocd-video-int</td><td>INT</td><td>Genie</td><td>Jimmy</td><td>Angelia confirmed Jimmy is PoC</td></tr>
+                <tr><td>argocd-video-stg</td><td>STG</td><td>Genie</td><td>Jimmy</td><td>Angelia confirmed Jimmy is PoC</td></tr>
+                <tr><td>argocd-video-prd</td><td>PRD</td><td>Genie</td><td>Jimmy</td><td>Angelia confirmed Jimmy is PoC</td></tr>
+                <tr><td>BzBee-int-sentry</td><td>INT</td><td>BzBee</td><td>Jin</td><td>JIRA: APPS-1018</td></tr>
+                <tr><td>BzBee-stg-sentry</td><td>STG</td><td>BzBee</td><td>Jin</td><td>JIRA: APPS-1018</td></tr>
+                <tr><td>BzBee-prd-sentry</td><td>PRD</td><td>BzBee</td><td>Jin</td><td>JIRA: APPS-1018</td></tr>
+                <tr><td>BzBee-prd</td><td>PRD</td><td>BzBee</td><td>Mike Wang</td><td>BzBee already done</td></tr>
+                <tr><td>BzBee-stg</td><td>STG</td><td>BzBee</td><td>Mike Wang</td><td>BzBee already done</td></tr>
+                <tr><td>BzBee-int</td><td>INT</td><td>BzBee</td><td>Mike Wang</td><td>BzBee already done</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="summary-section">
+        <h2>Work Distribution by Tech Lead</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tech Lead</th>
+                    <th style="text-align: center;">Completed</th>
+                    <th style="text-align: center;">Not Started</th>
+                    <th style="text-align: center;">Blocked</th>
+                    <th style="text-align: center;">Total Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Ricardo</strong></td>
+                    <td style="text-align: center; color: #2e7d32;">3</td>
+                    <td style="text-align: center; color: #1565c0;">9</td>
+                    <td style="text-align: center; color: #c62828;">0</td>
+                    <td style="text-align: center;"><strong>9</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Chris (Dan)</strong></td>
+                    <td style="text-align: center; color: #2e7d32;">0</td>
+                    <td style="text-align: center; color: #1565c0;">9</td>
+                    <td style="text-align: center; color: #c62828;">0</td>
+                    <td style="text-align: center;"><strong>9</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Jin Chung</strong></td>
+                    <td style="text-align: center; color: #2e7d32;">0</td>
+                    <td style="text-align: center; color: #1565c0;">0</td>
+                    <td style="text-align: center; color: #c62828;">3</td>
+                    <td style="text-align: center;"><strong>3</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Jin</strong></td>
+                    <td style="text-align: center; color: #2e7d32;">3</td>
+                    <td style="text-align: center; color: #1565c0;">0</td>
+                    <td style="text-align: center; color: #c62828;">0</td>
+                    <td style="text-align: center;"><strong>0</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Mike Wang</strong></td>
+                    <td style="text-align: center; color: #2e7d32;">3</td>
+                    <td style="text-align: center; color: #1565c0;">0</td>
+                    <td style="text-align: center; color: #c62828;">0</td>
+                    <td style="text-align: center;"><strong>0</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Jimmy</strong></td>
+                    <td style="text-align: center; color: #2e7d32;">3</td>
+                    <td style="text-align: center; color: #1565c0;">0</td>
+                    <td style="text-align: center; color: #c62828;">0</td>
+                    <td style="text-align: center;"><strong>0</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Mark Arana</strong></td>
+                    <td style="text-align: center; color: #2e7d32;">1</td>
+                    <td style="text-align: center; color: #1565c0;">0</td>
+                    <td style="text-align: center; color: #c62828;">0</td>
+                    <td style="text-align: center;"><strong>0</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>MyID Migration Status Report • Generated February 6, 2026</p>
+        <p style="margin-top: 5px;">Source: MyID_Migration_Tracker.csv</p>
+    </div>
+</body>
+</html>

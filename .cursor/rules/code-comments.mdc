@@ -1,0 +1,52 @@
+---
+description: Always add clear comments in code for easy updates
+globs: ["**/*.py", "**/*.html", "**/*.js"]
+alwaysApply: true
+---
+
+# Code Comments Rule
+
+## Requirement
+
+All code in this project MUST include clear, helpful comments that explain:
+
+1. **What** the code does
+2. **Where** to make changes for common updates
+3. **When** comments were last updated (if significant changes)
+
+## Comment Standards
+
+### Python Scripts
+
+```python
+# ============================================================
+# SECTION: Data Loading
+# PURPOSE: Reads the CSV file and processes migration data
+# TO UPDATE: Change the file path in CSV_PATH variable below
+# ============================================================
+```
+
+### HTML/JavaScript
+
+```html
+<!-- ============================================================
+     SECTION: Statistics Cards
+     PURPOSE: Displays the 8 clickable stat cards at top
+     TO UPDATE: These values are auto-generated from CSV
+     ============================================================ -->
+```
+
+### Key Areas to Comment
+
+1. **File paths** - Where data is loaded from
+2. **Color definitions** - Where to change chart/card colors
+3. **Data mappings** - How CSV columns map to display values
+4. **Calculations** - How counts and statistics are computed
+5. **Configuration** - Any settings that might need adjustment
+
+## Why This Matters
+
+The project owner needs to:
+- Quickly find where to make changes
+- Understand the code without deep technical knowledge
+- Update the tracker on a daily basis without confusion

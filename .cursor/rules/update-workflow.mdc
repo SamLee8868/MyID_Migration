@@ -1,0 +1,66 @@
+---
+description: How to properly update the migration tracker
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Update Workflow Rule
+
+## Daily Update Process
+
+When updating this project, follow these steps:
+
+### Step 1: Update the CSV Data
+
+1. Open `data/input/MyID_Migration_Tracker.csv` in Excel
+2. Make your changes (status updates, new apps, etc.)
+3. Save the file (keep as CSV format)
+
+### Step 2: Regenerate the Dashboard
+
+1. Open Terminal
+2. Navigate to the project: `cd "/Users/sam.levine.-nd/Desktop/2026 Projects/MyID_Migration"`
+3. Run: `python3 scripts/generate_dashboard.py`
+4. The new dashboard will be created in `reports/`
+
+### Step 3: Generate PDF Report (Optional)
+
+To create a PDF version for sharing with the team:
+
+1. In Terminal (same location as Step 2)
+2. Run: `bash scripts/generate_pdf.sh`
+3. The PDF will be created: `reports/MyID_Migration_Report.pdf`
+4. Share this PDF with your team as a 1-pager status update
+
+**Tip:** The PDF is automatically formatted for printing and includes all key metrics, at-risk items, blockers, and completion status.
+
+### Step 4: Archive (Optional)
+
+If you want to save a version before making changes:
+1. Copy current files to `archive/v#/` (increment version number)
+2. The Date Modified column will show when each version was created
+
+## CSV Column Reference
+
+| Column | Description |
+|--------|-------------|
+| Platform/App | Application or platform name |
+| Environment | INT, STG, PRD, QAT, LOCAL |
+| Owner | Business owner |
+| Tech Lead | Technical point of contact |
+| System | Genie, VPP, GSS, FGS, TM, BzBee, Workforce, Zazu |
+| Current Auth System | SOLO, Sentry 1.0, or Sentry 2.0 |
+| ACME Migration Status | Not Started, In Progress, Completed, Blocked, Not Needed |
+| ACME Target Deadline | 9/30/25, 2/27/26, Future, or blank |
+| Sentry Migration Status | Not Started, In Progress, Completed, Not Needed, N/A |
+| JIRA Ticket | Related JIRA ticket(s) |
+| At Risk for 2/27/26 | Yes/No |
+| Blocker | What's blocking progress (if any) |
+| Notes | Additional context |
+
+## Important Reminders
+
+- Always save CSV in UTF-8 format
+- Don't change column headers
+- Use exact status values (case-sensitive)
+- Run the script after every CSV update

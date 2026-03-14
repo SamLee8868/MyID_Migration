@@ -1,0 +1,26 @@
+# MyID Migration Dashboard Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core Dash framework
+dash>=2.14.0
+dash-core-components>=2.0.0
+dash-html-components>=2.0.0
+
+# Plotting
+plotly>=5.18.0
+
+# Data processing
+pandas>=2.0.0
+
+# Excel support (for reading .xlsx files)
+openpyxl>=3.1.0
+
+# Web server (included with Dash, but explicit)
+flask>=2.0.0
+werkzeug>=2.0.0
+
+# PDF export support (optional - browser print-to-PDF works without this)
+# weasyprint>=60.0  # Uncomment if you need programmatic PDF generation
+
+# For network deployment (optional)
+# gunicorn>=21.0.0  # Uncomment for production deployment

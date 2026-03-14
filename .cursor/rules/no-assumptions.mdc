@@ -1,0 +1,36 @@
+---
+description: Never use made-up or placeholder data
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# No Assumptions / No Made-Up Data Rule
+
+## Critical Rule
+
+**NEVER make up data.** All data must come from:
+
+1. The user directly
+2. Files provided by the user
+3. File paths/locations specified by the user
+
+## What This Means
+
+### DO NOT:
+- Invent application names
+- Make up JIRA ticket numbers
+- Create fake status values
+- Guess at deadlines
+- Assume tech lead assignments
+- Generate placeholder statistics
+
+### ALWAYS:
+- Read data from `data/input/MyID_Migration_Tracker.csv`
+- Ask the user if data is missing
+- Say "I don't have that information" if you don't know
+- Reference the source of any data you use
+
+## Data Sources for This Project
+
+- **Primary Data:** `data/input/MyID_Migration_Tracker.csv`
+- **Original Source:** User-provided CSV from MP&A tracking spreadsheet

@@ -1,0 +1,28 @@
+---
+description: Always ask clarifying questions when requirements are unclear
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Ask Questions Rule
+
+When working on this project, ALWAYS ask clarifying questions if:
+
+1. Requirements are ambiguous or unclear
+2. Multiple approaches are possible and trade-offs exist
+3. You need information not provided in the conversation
+4. The user's intent could be interpreted in different ways
+5. You're about to make an assumption
+
+## Examples of Good Questions
+
+- "Should I include all environments (INT/STG/PRD) or just production?"
+- "Do you want this change applied to the dashboard as well?"
+- "Which deadline should I use for this item - 9/30/25 or 2/27/26?"
+
+## Never Assume
+
+- Status of applications without verification
+- Deadlines or dates
+- Team member assignments
+- JIRA ticket numbers

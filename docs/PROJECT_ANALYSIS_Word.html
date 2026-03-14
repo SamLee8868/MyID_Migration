@@ -1,0 +1,169 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
+<head>
+<meta charset="UTF-8">
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Microsoft Word">
+<title>MyID Migration Dashboard — Project Analysis</title>
+<style>
+body { font-family: Calibri, sans-serif; font-size: 11pt; line-height: 1.4; margin: 1in; }
+h1 { font-size: 18pt; margin-top: 24pt; margin-bottom: 12pt; border-bottom: 1pt solid #333; }
+h2 { font-size: 14pt; margin-top: 18pt; margin-bottom: 8pt; }
+h3 { font-size: 12pt; margin-top: 12pt; margin-bottom: 6pt; }
+p { margin: 0 0 8pt; }
+ul, ol { margin: 0 0 8pt; padding-left: 24pt; }
+li { margin-bottom: 4pt; }
+table { border-collapse: collapse; margin: 12pt 0; width: 100%; }
+th, td { border: 1pt solid #333; padding: 6pt 10pt; text-align: left; }
+th { background: #f0f0f0; font-weight: bold; }
+.note { background: #fff9e6; padding: 10pt; margin: 12pt 0; border-left: 4pt solid #f0b000; font-size: 10pt; }
+blockquote { margin: 12pt 0; padding-left: 18pt; border-left: 3pt solid #ccc; color: #444; }
+</style>
+</head>
+<body>
+
+<p><em>Generated from codebase and config only. No invented details.</em></p>
+<hr>
+
+<h1>1. WHAT IT DOES (Executive Summary)</h1>
+<p>This project is a <strong>migration tracking dashboard</strong> that turns a single Excel tracker (maintained on SharePoint) into a visual, interactive HTML report. It tracks two company-wide migrations: moving applications from SOLO to ACME authentication (MyID), and from Sentry 1.0 to Sentry 2.0 (or Direct Integration / Debut-Sentry). The dashboard shows how many applications are done, in progress, or at risk by system and tech lead, with a quadrant chart, KPI cards, and clickable modals. Directors, senior managers, tech leads, and PMs use it to see migration status at a glance and to export a clean PDF for status updates. Data is updated by downloading the latest Excel from SharePoint, saving it into the project folder, and re-running one Python command; the dashboard version number auto-increments when the data file changes.</p>
+
+<h1>2. EXPLAIN IT LIKE I'M 5</h1>
+<p>Imagine you have a <strong>big list on a whiteboard</strong> (the Excel file) where people write which apps have moved to the new front door (ACME) and which have moved to the new mailbox (Sentry 2.0). The list is messy and hard to read in meetings.</p>
+<p>This project is like a <strong>robot that reads that list</strong> and draws a <strong>pretty picture</strong> (the dashboard): colored boxes that say "10 done, 19 to do," a <strong>bubble map</strong> showing which teams are ahead or behind, and <strong>clickable labels</strong> so when you tap a number you see the actual app names. The robot only needs you to <strong>put the newest list in a special folder</strong> and say "go"; it figures out which file is newest, checks if the list changed, and if so it bumps the version number and writes a line in a <strong>changelog</strong> so everyone knows what changed.</p>
+<p><strong>Tools:</strong></p>
+<ul>
+<li><strong>Python</strong> is the robot that reads the list and draws the picture.</li>
+<li><strong>Excel (xlsx)</strong> is the list; the robot opens it like a zip and reads the XML inside so it works even when Excel uses strict formats.</li>
+<li><strong>HTML + Chart.js</strong> is the picture: one file that runs in the browser with doughnut charts, bar charts, and a bubble chart, no server needed.</li>
+<li><strong>JSON and Markdown</strong> are the robot's memory: it stores the current version and a hash of the list so it knows when to bump the version and what to write in the changelog.</li>
+</ul>
+
+<h1>3. FULL TECHNICAL BREAKDOWN</h1>
+
+<h2>a) Tech stack</h2>
+<table>
+<tr><th>Layer</th><th>Technology</th></tr>
+<tr><td><strong>Language</strong></td><td>Python 3 (stdlib + optional openpyxl; v3 Excel uses built-in zip + xml.etree only)</td></tr>
+<tr><td><strong>Data source</strong></td><td>Excel (.xlsx) — OOXML parsed via zipfile + ElementTree; fallback: CSV</td></tr>
+<tr><td><strong>Output</strong></td><td>Single-file HTML (inline CSS + JS)</td></tr>
+<tr><td><strong>Charts</strong></td><td>Chart.js (loaded from cdn.jsdelivr.net)</td></tr>
+<tr><td><strong>State</strong></td><td>JSON (data/version_state.json), Markdown (CHANGELOG.md)</td></tr>
+<tr><td><strong>Deployment</strong></td><td>None — static HTML; run script locally, open file in browser or print to PDF</td></tr>
+</table>
+
+<h2>b) What each major file or folder does</h2>
+<table>
+<tr><th>Path</th><th>Purpose</th></tr>
+<tr><td>scripts/generate_dashboard.py</td><td>Main entry: finds latest Excel, parses it, computes stats and system matrix, applies versioning, emits HTML with embedded data and Chart.js config.</td></tr>
+<tr><td>data/input/</td><td>Holds Excel (and optional CSV). Script picks the <strong>newest .xlsx</strong> by mtime; filenames often include date suffix (e.g. _022726).</td></tr>
+<tr><td>data/version_state.json</td><td>Persists major/minor version, last data file hash, and last filename.</td></tr>
+<tr><td>reports/MyID_Migration_Dashboard.html</td><td>Generated dashboard; do not edit by hand.</td></tr>
+<tr><td>CHANGELOG.md</td><td>Human-readable version history; script appends entries when data or major version changes.</td></tr>
+<tr><td>docs/PROJECT_CONTEXT.md</td><td>Canonical project context for handoff and AI agents.</td></tr>
+<tr><td>README.md</td><td>User-facing quick start, update steps, column reference, troubleshooting, PDF instructions.</td></tr>
+<tr><td>docs/PROJECT_ANALYSIS.md</td><td>This document (Markdown source).</td></tr>
+<tr><td>.cursor/rules/*.mdc</td><td>Cursor/IDE rules (ask questions, no assumptions, context preservation, etc.).</td></tr>
+<tr><td>archive/</td><td>Backups / older artifacts.</td></tr>
+</table>
+
+<h2>c) End-to-end data flow</h2>
+<ol>
+<li><strong>Input:</strong> User places an Excel file in data/input/ (e.g. downloaded from SharePoint with a date suffix).</li>
+<li><strong>Discovery:</strong> Script lists *.xlsx in data/input/, sorts by modification time, uses the newest.</li>
+<li><strong>Parse:</strong> Excel is opened as a zip; xl/sharedStrings.xml and xl/worksheets/sheet1.xml are read and parsed with ElementTree. Rows are mapped to columns A–Q; v3 format is detected by "System" in row 1 column B.</li>
+<li><strong>Normalize:</strong> Each row becomes an app record. Obsolete and "not in use" apps are filtered; statuses are normalized.</li>
+<li><strong>Compute:</strong> Stats (ACME done/to do/at risk, Sentry done/in progress/to do/N/A), system matrix, and tech-lead workload.</li>
+<li><strong>Version:</strong> Hash of the chosen Excel file is compared to version_state.json. If different, minor version increments, state and CHANGELOG.md are updated.</li>
+<li><strong>Output:</strong> One HTML file is written to reports/ with inline CSS/JS, JSON blobs for modals and quadrant data, and Chart.js config.</li>
+</ol>
+<p>No server, no database, no API calls at runtime.</p>
+
+<h2>d) APIs or external services</h2>
+<ul>
+<li><strong>Chart.js:</strong> Loaded from https://cdn.jsdelivr.net/npm/chart.js in the generated HTML. No other external requests.</li>
+<li><strong>SharePoint:</strong> Not accessed by the app. User downloads the Excel manually; the script only reads the local file.</li>
+</ul>
+
+<h2>e) Authentication and security</h2>
+<ul>
+<li>No auth in the app. The HTML is static.</li>
+<li>No secrets in the repo; data is the Excel/CSV the user places in data/input/.</li>
+</ul>
+
+<h2>f) Deployment and run</h2>
+<ul>
+<li><strong>Run:</strong> From project root: python3 scripts/generate_dashboard.py. Then open reports/MyID_Migration_Dashboard.html in a browser (or print to PDF).</li>
+<li><strong>Deployment:</strong> There is no deployed service. The "deployment" is generating the HTML and optionally saving it to a shared location or emailing the PDF.</li>
+</ul>
+
+<h2>g) Technically complex or interesting parts</h2>
+<ul>
+<li><strong>Excel without openpyxl for v3:</strong> The script parses OOXML by unzipping the xlsx and parsing sharedStrings.xml and sheet1.xml with ElementTree, including namespace normalization for strict OOXML.</li>
+<li><strong>Quadrant positioning logic:</strong> Systems are placed in a 2×3 grid (SOLO vs ACME × Sentry 1.0 / Debut-Sentry / Sentry 2.0). Logic distinguishes "still has Sentry 1.0 work" from "100% off Sentry 1.0" and then target auth (Debut-Sentry vs Sentry 2.0).</li>
+<li><strong>Versioning:</strong> Minor version auto-increments only when the data file's hash changes; major is manual (constant in script).</li>
+</ul>
+
+<h2>h) Known limitations / shortcuts</h2>
+<ul>
+<li>Excel must be closed when the script runs.</li>
+<li>No direct SharePoint integration — user must download and save the file.</li>
+<li>Single HTML file — all data is embedded; large datasets could make the file big.</li>
+<li>PDF: Print-to-PDF works from the browser; Chrome headless may be blocked in sandboxed environments.</li>
+<li>CSV fallback exists but the primary path is Excel; CSV column set may not match the full v3 column mapping.</li>
+</ul>
+
+<h1>4. HOW TO TALK ABOUT IT IN AN INTERVIEW</h1>
+
+<h2>30-second elevator pitch</h2>
+<blockquote>"I built an internal migration tracking dashboard that turns our SharePoint Excel tracker into a single-page HTML report with KPIs, charts, and a quadrant view. A Python script parses the Excel file—using raw OOXML parsing so we're not tied to a specific library—computes stats and system-level progress, and emits self-contained HTML with Chart.js. We added automatic versioning so the report version bumps whenever the data file changes, and we track that in a changelog. Stakeholders get a one-command refresh and a clear view of what's done, in progress, and at risk for two parallel migrations."</blockquote>
+
+<h2>2-minute deep-dive</h2>
+<blockquote>"We have two company-wide migrations—SOLO to ACME for identity and Sentry 1.0 to Sentry 2.0 or alternatives—and the source of truth is an Excel matrix on SharePoint. I wanted to avoid manual copy-paste and give directors and tech leads a single place to see status. The pipeline is: drop the latest Excel into a folder, run one Python script. The script finds the newest xlsx by modification time and parses it without openpyxl by unzipping the xlsx and parsing the sheet and shared-strings XML. We normalize statuses, filter obsolete and deactivated rows, then compute two tracks: ACME (off SOLO) and Sentry (off Sentry 1.0), including per-system percentages and target auth for the quadrant. We also added versioning: we hash the data file and store state in JSON. If the hash changes, we bump the minor version and append to a Markdown changelog. The output is one HTML file with inline CSS and JS and Chart.js from a CDN. One non-trivial piece was the quadrant logic: we had to fix systems with partial Sentry progress being placed in the wrong row. Now placement is based on whether the system is fully off Sentry 1.0 and, if so, whether their target is Debut-Sentry or Sentry 2.0."</blockquote>
+
+<h2>3 likely interview questions and strong answers</h2>
+<p><strong>Q1: How do you handle the Excel file when your team doesn't control the format?</strong><br/>
+We don't assume a specific library. For the v3 format we parse the xlsx as a zip and read the OOXML XML (sheet and shared strings) with the standard library. We detect format by checking a header cell and then map columns by letter. That way we're resilient to strict OOXML and don't depend on openpyxl for the main path. We still have a CSV fallback and document the column mapping so changes can be accommodated.</p>
+
+<p><strong>Q2: How would you scale this if the number of applications grew a lot?</strong><br/>
+Right now all data is embedded in one HTML file, which is fine for tens of apps. If we scaled to hundreds or thousands, I'd split data from presentation: e.g. the script writes a JSON file and the HTML fetches it, or we'd move to a small backend that serves the JSON. We could also paginate or filter the tables and modals. Versioning and hashing would still apply to the source Excel or to the generated JSON.</p>
+
+<p><strong>Q3: Why auto-increment version on data change instead of on every run?</strong><br/>
+We want the version to reflect "something changed that stakeholders care about." If you re-run without changing the file, the report is identical, so the version shouldn't change. We hash the data file and only bump the minor version when the hash changes, and we append to the changelog only then. That keeps the changelog meaningful and avoids noise like "v2.47" with no real changes.</p>
+
+<h1>5. RESUME BULLET POINTS</h1>
+
+<h2>Implementation & technical</h2>
+<ul>
+<li>Built a Python pipeline that parses Excel (OOXML) via zip and XML to generate a static HTML migration dashboard, avoiding external Excel libraries for the primary format.</li>
+<li>Implemented automatic versioning (major/minor) and changelog updates using file hashing and JSON state so report versions reflect actual data or dashboard changes.</li>
+<li>Designed quadrant chart logic to map 7 systems onto a 2×3 grid (SOLO/ACME × Sentry 1.0 / Debut-Sentry / Sentry 2.0) with correct placement for partial vs complete migration and target auth.</li>
+<li>Integrated Chart.js (doughnut, bar, bubble) into a single-file HTML dashboard with embedded JSON and print-optimized CSS for PDF export.</li>
+<li>Added automatic selection of the latest Excel file by modification time so stakeholders can drop date-stamped downloads into a folder and re-run one command to refresh the report.</li>
+</ul>
+
+<h2>Process & collaboration</h2>
+<ul>
+<li>Documented project context, column mapping, and versioning rules in PROJECT_CONTEXT.md to support handoff and AI-assisted maintenance.</li>
+<li>Delivered a one-command workflow (download Excel → run script → open HTML) for directors, tech leads, and PMs to view SOLO→ACME and Sentry 1.0→2.0 migration status.</li>
+<li>Reduced manual steps in status reporting by generating a shareable HTML/PDF dashboard from the canonical SharePoint Excel tracker. <em>[Confirm with stakeholder: e.g. "reduced status prep time by X minutes per cycle."]</em></li>
+</ul>
+
+<h2>Outcomes</h2>
+<ul>
+<li>Tracked migration status for 29 active applications across 7 systems with at-risk visibility against a 2/27/26 deadline.</li>
+<li>Enabled versioned changelog and data-driven version bumps so each report refresh is traceable to a specific data file and date.</li>
+</ul>
+
+<h2>Fill-in / confirm</h2>
+<ul>
+<li>"Saved X hours per sprint (or per month) on status report preparation" — confirm with actual usage.</li>
+<li>"Reduced errors from manual copy-paste by automating report generation from the single source Excel" — confirm if there was a prior manual process.</li>
+<li>"Improved visibility for X stakeholders (directors, tech leads, PMs)" — replace X with approximate number if known.</li>
+</ul>
+
+<div class="note">
+<strong>To save as Word (.docx):</strong> In Microsoft Word, go to File → Save As → choose "Word Document (.docx)" and save as <strong>PROJECT_ANALYSIS.docx</strong>.
+</div>
+
+</body>
+</html>

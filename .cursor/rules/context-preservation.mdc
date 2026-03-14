@@ -1,0 +1,88 @@
+---
+description: Preserve context by documenting to files and archiving at checkpoints
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Context Preservation Rule
+
+## Core Principle
+If it's important, write it to a file - not just say it in chat. Conversation is temporary; files are permanent.
+
+---
+
+## Part 1: Document As You Go
+
+### What to Write to Files (not just chat)
+- Design decisions and why they were made
+- File structure changes
+- Configuration choices
+- Stats or data that may change
+- Instructions for future use
+
+### Where to Write
+| Type of Info | Write To |
+|--------------|----------|
+| Project state & decisions | `docs/PROJECT_CONTEXT.md` |
+| How-to instructions | `README.md` |
+| Code explanations | Comments in the code |
+| Version history | `archive/CHANGELOG.md` |
+
+---
+
+## Part 2: Archiving Checkpoint
+
+### When to Trigger
+- User mentions context is building up
+- Context appears to be ~50-60% full
+- Before a major phase change in work
+- At natural breakpoints (feature complete, etc.)
+
+### Checkpoint Process
+1. **Pause current work**
+2. **Summarize to PROJECT_CONTEXT.md:**
+   - What was accomplished this session
+   - Current state of the project
+   - Any pending items or decisions
+3. **Create archive entry** (if significant changes):
+   - Add dated entry to `archive/CHANGELOG.md`
+4. **Offer options:**
+   - Continue in current session (if context allows)
+   - Start fresh session with context file reference
+
+### Checkpoint Prompt to User
+When triggering a checkpoint, say:
+> "Context is building up. Let me archive our progress to PROJECT_CONTEXT.md before continuing. Would you like to continue here or start a fresh session?"
+
+---
+
+## Part 3: Resuming Work
+
+When starting a new session on this project:
+1. Read `docs/PROJECT_CONTEXT.md` first
+2. The `.cursor/rules/` files are auto-applied
+3. Only read additional files as needed for the specific task
+
+---
+
+## File Templates
+
+### PROJECT_CONTEXT.md Update Format
+```markdown
+## Session Update - [DATE]
+### Accomplished
+- [What was done]
+
+### Current State
+- [Stats, status, etc.]
+
+### Pending
+- [What's left to do]
+```
+
+### CHANGELOG.md Entry Format
+```markdown
+## [DATE]
+- [Brief description of changes]
+- Files modified: [list]
+```

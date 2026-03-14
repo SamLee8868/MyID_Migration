@@ -1,0 +1,44 @@
+Platform/App,Environment,Owner,Tech Lead,System,Current Auth System,ACME Migration Status,ACME Target Deadline,Sentry Migration Status,JIRA Ticket,At Risk for 2/27/26,Blocker,Notes
+app-genie-int,INT,Demo Owner,Tech Lead A,Genie,Sentry 2.0,Completed,,Completed,N/A,No,,
+app-genie-prd,PRD,Demo Owner,Tech Lead A,Genie,Sentry 2.0,Completed,,Completed,N/A,No,,
+app-genie-stg,STG,Demo Owner,Tech Lead A,Genie,Sentry 2.0,Completed,,Completed,N/A,No,,
+app-vpp-int,INT,Demo Owner,Tech Lead B,VPP,Sentry 2.0,Not Needed,,Completed,,No,,Demo placeholder
+app-vpp-prd,PRD,Demo Owner,Tech Lead B,VPP,Sentry 2.0,Not Needed,,Completed,,No,,Demo placeholder
+app-vpp-stg,STG,Demo Owner,Tech Lead B,VPP,Sentry 2.0,Not Needed,,Completed,,No,,Demo placeholder
+app-vpp-migrate-int,INT,Demo Owner,Tech Lead B,VPP,Sentry 1.0,Not Started,2/27/26,Not Started,DEMO-101,Yes,,Using Debut Sentry path
+app-vpp-migrate-prd,PRD,Demo Owner,Tech Lead B,VPP,Sentry 1.0,Not Started,2/27/26,Not Started,DEMO-101,Yes,,Using Debut Sentry path
+app-vpp-migrate-stg,STG,Demo Owner,Tech Lead B,VPP,Sentry 1.0,Not Started,2/27/26,Not Started,DEMO-101,Yes,,Using Debut Sentry path
+app-solo-int,INT,Demo Owner,Tech Lead A,Genie,SOLO,Not Needed,,N/A,,No,,Demo - no migration needed
+app-solo-prd,PRD,Demo Owner,Tech Lead A,Genie,SOLO,Not Needed,,N/A,,No,,Demo - no migration needed
+app-solo-stg,STG,Demo Owner,Tech Lead A,Genie,SOLO,Not Needed,,N/A,,No,,Demo - no migration needed
+app-vpp-solo-int,INT,Demo Owner,Tech Lead B,VPP,SOLO,Not Started,2/27/26,N/A,DEMO-102,Yes,,Demo at-risk item
+app-vpp-solo-stg,STG,Demo Owner,Tech Lead B,VPP,SOLO,Not Started,2/27/26,N/A,DEMO-102,Yes,,Demo at-risk item
+app-vpp-solo-prd,PRD,Demo Owner,Tech Lead B,VPP,SOLO,Not Started,2/27/26,N/A,DEMO-102,Yes,,Demo at-risk item
+app-gss-int,INT,Demo Owner,Tech Lead C,GSS,SOLO,Not Started,Future,N/A,,No,,Demo future work
+app-gss-prd,PRD,Demo Owner,Tech Lead C,GSS,SOLO,Not Started,Future,N/A,,No,,Demo future work
+app-gss-stg,STG,Demo Owner,Tech Lead C,GSS,SOLO,Not Started,Future,N/A,,No,,Demo future work
+app-gss-qat,QAT,Demo Owner,Tech Lead C,GSS,SOLO,Not Started,Future,N/A,,No,,Demo future work
+app-fgs-int,INT,Demo Owner,Tech Lead D,FGS,SOLO,Blocked,,N/A,DEMO-201,No,Waiting on dependency,Demo blocked
+app-fgs-prd,PRD,Demo Owner,Tech Lead D,FGS,SOLO,Blocked,,N/A,DEMO-201,No,Waiting on dependency,Demo blocked
+app-fgs-stg,STG,Demo Owner,Tech Lead D,FGS,SOLO,Blocked,,N/A,DEMO-201,No,Waiting on dependency,Demo blocked
+app-fgs-legacy-int,INT,Demo Owner,Tech Lead D,FGS,SOLO,Not Needed,,N/A,,No,,Demo disabled
+app-fgs-legacy-prd,PRD,Demo Owner,Tech Lead D,FGS,SOLO,Not Needed,,N/A,,No,,Demo disabled
+app-fgs-legacy-stg,STG,Demo Owner,Tech Lead D,FGS,SOLO,Not Needed,,N/A,,No,,Demo disabled
+app-workforce-prd,PRD,Demo Owner,Tech Lead E,Workforce,SOLO,Completed,,N/A,,No,,Direct integration - demo
+app-argocd-int,INT,Demo Owner,Tech Lead A,Genie,SOLO,Completed,,N/A,,No,,Demo completed
+app-argocd-prd,PRD,Demo Owner,Tech Lead A,Genie,SOLO,Completed,,N/A,,No,,Demo completed
+app-argocd-stg,STG,Demo Owner,Tech Lead A,Genie,SOLO,Completed,,N/A,,No,,Demo completed
+app-tm-int,INT,Demo Owner,Tech Lead F,TM,Sentry 2.0,Not Started,2/27/26,Not Needed,,Yes,,Demo at-risk
+app-tm-prd,PRD,Demo Owner,Tech Lead F,TM,Sentry 2.0,Not Started,2/27/26,Not Needed,,Yes,,Demo at-risk
+app-tm-stg,STG,Demo Owner,Tech Lead F,TM,Sentry 2.0,Not Started,2/27/26,Not Needed,,Yes,,Demo at-risk
+app-bzbee-int,INT,Demo Owner,Tech Lead G,BzBee,SOLO,Completed,,N/A,DEMO-301,No,,
+app-bzbee-stg,STG,Demo Owner,Tech Lead G,BzBee,SOLO,Completed,,N/A,DEMO-301,No,,
+app-bzbee-prd,PRD,Demo Owner,Tech Lead G,BzBee,SOLO,Completed,,N/A,DEMO-301,No,,
+app-bzbee-saml-prd,PRD,Demo Owner,Tech Lead G,BzBee,SOLO,Not Needed,,N/A,,No,,Demo disabled
+app-bzbee-main-int,INT,Demo Owner,Tech Lead G,BzBee,Sentry 2.0,Completed,,Completed,,No,,Demo - already on Sentry 2.0
+app-bzbee-main-stg,STG,Demo Owner,Tech Lead G,BzBee,Sentry 2.0,Completed,,Completed,,No,,Demo - already on Sentry 2.0
+app-bzbee-main-prd,PRD,Demo Owner,Tech Lead G,BzBee,Sentry 2.0,Completed,,Completed,,No,,Demo - already on Sentry 2.0
+app-bzbee-sentry-int,INT,Demo Owner,Tech Lead G,BzBee,Sentry 1.0,Completed,,In Progress,DEMO-301,No,,Demo - one app still on Sentry 1.0
+app-deprecated-int,INT,Demo Owner,Tech Lead A,Genie,Sentry 2.0,Obsolete,,Completed,,No,,Demo obsolete - no migration required
+app-deprecated-stg,STG,Demo Owner,Tech Lead A,Genie,Sentry 2.0,Obsolete,,Completed,,No,,Demo obsolete - no migration required
+app-legacy-vpp (Not in use),PRD,Demo Owner,Tech Lead B,VPP,Sentry 2.0,Not Needed,,Completed,,No,,Demo deactivated app

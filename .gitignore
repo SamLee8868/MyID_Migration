@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+.env
+.venv
+venv/
+ENV/
+
+# Generated / local state (so repo stays showcase-ready)
+data/version_state.json
+# Ignore Excel and real CSV so only demo data is committed (clone = showcase mode)
+data/input/*.xlsx
+data/input/MyID_Migration_Tracker.csv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE (optional - remove if you want to share rules)
+# .cursor/
+# .vscode/
+
+# Reports - optional: ignore generated HTML so clone generates fresh
+# reports/*.html

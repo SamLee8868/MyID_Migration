@@ -1,0 +1,21 @@
+# Archive Folder
+
+This folder contains versioned backups of the project files.
+
+## How to Create a Version
+
+1. Create a new folder: `v1/`, `v2/`, etc.
+2. Copy the current files into it
+3. The Date Modified column will show when each version was created
+
+## Example Structure
+
+```
+archive/
+├── v1/
+│   ├── MyID_Migration_Tracker.csv
+│   └── MyID_Migration_Dashboard.html
+├── v2/
+│   ├── MyID_Migration_Tracker.csv
+│   └── MyID_Migration_Dashboard.html
+```
